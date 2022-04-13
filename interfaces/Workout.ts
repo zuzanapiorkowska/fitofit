@@ -1,6 +1,6 @@
-type Discipline = "biking" | "swimming" | "running";
-type GoalType = "distance" | "workoutCount";
-type Gender = "male" | "female" | "other" | "prefer not to say";
+export type Discipline = "cycling" | "swimming" | "running";
+export type GoalType = "distance" | "workoutCount";
+export type Gender = "male" | "female" | "other" | "prefer not to say";
 
 export interface IPartialWorkout {
   discipline: Discipline;
@@ -9,7 +9,7 @@ export interface IPartialWorkout {
 }
 
 export interface IWorkout {
-  userId: string;
+  userId?: string;
   workoutId: string;
   date: string;
   parts: IPartialWorkout[];

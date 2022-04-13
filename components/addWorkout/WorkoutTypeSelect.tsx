@@ -1,17 +1,22 @@
-export function WorkoutTypeSelect() {
+import { UseFormRegister } from "react-hook-form";
+import { NewWorkoutRequest } from "../../validation/NewWorkoutRequest";
+
+interface WorkoutTypeSelectProps {
+  onChange(selection: string): void;
+}
+
+export function WorkoutTypeSelect({onChange}: WorkoutTypeSelectProps) {
   return (
-    <div>
-      <label htmlFor="workout-type" className="workout-type_label">
+    <div className="input-area">
+      <label htmlFor="workout-type" className="label">
         Type:
       </label>
       <select
-        name="workout-type"
-        data-test="workout-type"
-        className="workout-type__select"
+        className="workout-type__select" onChange={(e)=>onChange(e.target.value)}
       >
-        <option value="biking">Rower</option>
-        <option value="running">Bieganie</option>
-        <option value="swimming">Pływanie</option>
+        <option value="cycling">cycling</option>
+        <option value="running">running</option>
+        <option value="swimming">swimming</option>
       </select>
     </div>
   );
