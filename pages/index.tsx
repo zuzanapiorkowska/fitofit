@@ -1,5 +1,6 @@
 import produce from "immer";
 import { useEffect, useState } from "react";
+import { Statistics } from "../components/mainPage/Statistics";
 import { Workout } from "../components/mainPage/Workout";
 import { IStandardResponse, IWorkout } from "../interfaces/Workout";
 import { MockRequest } from "../services/MockRequest";
@@ -34,6 +35,7 @@ export default function UserPage() {
     );
   }
 
+
   return (
     <div className="container">
       <img src="/fitofitlogo.png"className="logo"/>
@@ -53,6 +55,7 @@ export default function UserPage() {
           );
         })}
       </div>
+        <Statistics userId={workouts[0].userId}/>
     </div>
   );
 }

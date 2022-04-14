@@ -15,7 +15,6 @@ import produce from "immer";
 import { useRouter } from "next/router";
 import { MockRequest } from "../../services/MockRequest";
 import { Discipline } from "../../components/addWorkout/Discipline";
-import { SendRequest } from "../../services/SendRequest";
 
 export default function addWorkout() {
   const [workoutToEdit, setWorkoutToEdit] = useState<IWorkout>();
@@ -29,7 +28,7 @@ export default function addWorkout() {
   const workoutId = router.query.workoutId as unknown as string | undefined;
 
   useEffect(() => {
-    const workout = new MockRequest().sendWorkoutsRequest("piesId");
+    const workout = new MockRequest().sendWorkoutRequest("piesId");
     // console.log("tried to get workout to edit")
     // new SendRequest()
     // .getTraining(workoutId)
@@ -49,6 +48,8 @@ export default function addWorkout() {
     });
   }, []);
 
+  useEffect(()=> {trigger()}, [workoutToEdit])
+
   const resolver = classValidatorResolver(NewWorkoutRequest);
   const methods = useForm<NewWorkoutRequest>({
     resolver,
@@ -59,7 +60,7 @@ export default function addWorkout() {
     handleSubmit,
     setValue,
     formState: { errors, isSubmitted },
-    clearErrors,
+    clearErrors, trigger
   } = methods;
 
   async function onSubmit(workout: IWorkout) {
@@ -97,6 +98,7 @@ export default function addWorkout() {
       })
     );
   }
+
   return (
     <div className="container">
       <img src="/fitofitlogo.png" className="logo min" />
@@ -104,6 +106,7 @@ export default function addWorkout() {
         <h1 className="add-workout__title">EDIT WORKOUT</h1>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <input hidden {...register(`userId`, {setValueAs:()=> workoutToEdit?.userId})}/>
             <DateInput
               dateToEdit={workoutToEdit?.date}
             />
@@ -128,9 +131,11 @@ export default function addWorkout() {
                     />
                     <DistanceInput
                       idx={idx}
+                      distanceToEdit={workoutToEdit.parts[idx].distanceInMeters}
                     />
                     <DurationInput
                       idx={idx}
+                      durationToEdit={workoutToEdit.parts[idx].durationInSeconds}
                     />
                   </div>
                 );

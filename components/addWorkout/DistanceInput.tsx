@@ -13,7 +13,7 @@ export function DistanceInput({ idx, distanceToEdit }: DistanceInputProps) {
   return (<>
     <div className="input-area">
       <label htmlFor="distance" className="label">
-        Distance in km:{" "}
+        Distance:{" "}
       </label>
       <input
         {...register(`parts.${idx}.distanceInMeters`, { setValueAs: v => +v*1000 })}
@@ -22,6 +22,7 @@ export function DistanceInput({ idx, distanceToEdit }: DistanceInputProps) {
         className="input distance-input"
         defaultValue={distanceToEdit && distanceToEdit/1000}
       />
+      <span className="unit">km</span>
      
     </div>
     {errors.parts && errors.parts[idx] && errors.parts[idx].distanceInMeters && <p className="error">Enter the distance!</p>}

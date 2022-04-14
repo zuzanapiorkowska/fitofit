@@ -6,7 +6,7 @@ interface DateInputProps {
 }
 
 export function DateInput({ dateToEdit}: DateInputProps) {
- const { register, formState: {errors, isSubmitted} } = useFormContext();
+ const { register, formState: {errors, isSubmitted}, setValue } = useFormContext();
   return (
     <>
       <div className="input-area">

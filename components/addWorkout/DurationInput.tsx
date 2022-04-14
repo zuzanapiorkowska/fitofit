@@ -42,6 +42,7 @@ export function DurationInput({ idx, durationToEdit }: DurationInputProps) {
         <input
           name="hours"
           type="number"
+          placeholder="hr"
           className="input time-input"
           onChange={e => {
             const value = +e.target.value;
@@ -53,10 +54,11 @@ export function DurationInput({ idx, durationToEdit }: DurationInputProps) {
           }}
           defaultValue={previousDuration.hours}
         />
-        <span className="time-unit">hr</span>
+        <span className="time-unit">:</span>
         <input
           name="minutes"
           type="number"
+          placeholder="min"
           className="input time-input"
           onChange={e => {
             const value = +e.target.value;
@@ -68,10 +70,11 @@ export function DurationInput({ idx, durationToEdit }: DurationInputProps) {
           }}
           defaultValue={previousDuration.minutes}
         />
-        <span className="time-unit">min</span>
+        <span className="time-unit">:</span>
         <input
           name="seconds"
           type="number"
+          placeholder="sec"
           className="input time-input"
           onChange={e => {
             const value = +e.target.value;
@@ -84,7 +87,6 @@ export function DurationInput({ idx, durationToEdit }: DurationInputProps) {
           }}
           defaultValue={previousDuration.seconds}
         />
-        <span className="time-unit">sec</span>
         <input
           defaultValue={time || 0}
           hidden
