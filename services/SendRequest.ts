@@ -1,5 +1,5 @@
 import axios from "axios";
-import { INewWorkout, IStandardResponse, IWorkout } from "../interfaces/Workout";
+import { IWorkout, IStandardResponse} from "../interfaces/Workout";
 
 export class SendRequest {
   async getAllTrainings(): Promise<IWorkout[]> {
@@ -26,7 +26,7 @@ export class SendRequest {
     }
   }
 
-  async addNewTraining(workout: INewWorkout): Promise<IWorkout> {
+  async addNewTraining(workout: IWorkout): Promise<IWorkout> {
     const url = "/api/training";
     try {
       console.log("tried to send new training");
@@ -38,7 +38,7 @@ export class SendRequest {
     }
   }
 
-  async updateTraining(workout: IWorkout): Promise<IStandardResponse> {
+  async editTraining(workout: IWorkout): Promise<IStandardResponse> {
     const url = "/api/training";
     try {
       console.log("tried to update training");

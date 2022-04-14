@@ -9,7 +9,7 @@ interface DurationInputProps {
   errors: any;
   idx: number;
   durationToEdit?: number;
-  setValue(name: string, value: number): void;
+  setValue(name: string, value: number, {}): void;
 }
 
 export function DurationInput({
@@ -33,9 +33,10 @@ export function DurationInput({
   }
 
   useEffect(() => {
+    console.log("ok");
     const sum =
       duration.hours * 3600 + duration.minutes * 60 + duration.seconds;
-    setValue(`parts.${idx}.durationInSeconds`, sum);
+    setValue(`parts.${idx}.durationInSeconds`, sum, { shouldValidate: true });
   }, [duration]);
 
   return (
@@ -83,11 +84,13 @@ export function DurationInput({
                 draft.seconds = value;
               })
             );
+            console.log(duration);
           }}
           defaultValue={previousDuration.seconds}
         />
         <span className="time-unit">sec</span>
-        <input hidden {...register(`parts.${idx}.durationInSeconds`)} />
+        <input defaultValue={time || 0} hidden {...register(`parts.${idx}.durationInSeconds`)} />
+
       </div>
       {errors.parts &&
         errors.parts[idx] &&

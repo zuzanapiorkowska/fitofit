@@ -6,7 +6,7 @@ import { NewWorkoutRequest } from "../validation/NewWorkoutRequest";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { IPartialWorkout } from "../interfaces/Workout";
+import { IWorkout } from "../interfaces/Workout";
 import produce from "immer";
 import { Discipline } from "../components/addWorkout/Discipline";
 
@@ -17,13 +17,19 @@ export default function addWorkout() {
     handleSubmit,
     getValues,
     setValue,
-    formState: { errors },
+    formState: { errors, touchedFields, dirtyFields, isSubmitting, isSubmitted }, clearErrors
   } = useForm<NewWorkoutRequest>({ resolver });
-  async function onSubmit(data: any) {
-    const request = new SendRequest();
-    const response = request.sendEditWorkoutRequest(data);
-    console.log(data);
-  }
+
+  console.log("Dirty fields: ", dirtyFields, "Touched fields: ", touchedFields);
+
+  async function onSubmit(workout: IWorkout) {
+    console.log("tried to send request");
+    // new SendRequest()
+    // .addNewTraining(workout)
+    // .then((res: IWorkout) => {
+    //       console.log("New workout Id: ", res.id);
+    //   })
+    }
 
   console.log("Errors: ", errors);
 
@@ -47,14 +53,16 @@ export default function addWorkout() {
     <div className="container">
       <img src="/fitofitlogo.png" className="logo min" />
       <div className="add-workout">
-        <h1 className="add-workout__title">TRAINING DETAILS</h1>
+        <h1 className="add-workout__title">WORKOUT DETAILS</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <DateInput register={register} errors={errors} />
+          <DateInput register={register} errors={errors} isSubmitted={isSubmitted} />
           <div className="add-part">
             <WorkoutTypeSelect
               onChange={selection => setNextDiscipline(selection)}
             />
-            <button className="add-part__button" onClick={() => addNewPart()}>
+            <button className="add-part__button" onClick={() => {addNewPart(); setTimeout(() => {
+              clearErrors();
+            }, 0);}}>
               +
             </button>
           </div>
@@ -78,6 +86,7 @@ export default function addWorkout() {
                       errors={errors}
                       idx={idx}
                       setValue={setValue}
+                 
                     />
                   </div>
                 );

@@ -6,11 +6,16 @@ import { NewWorkoutRequest } from "../../validation/NewWorkoutRequest";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { IPartialWorkout, IWorkout } from "../../interfaces/Workout";
+import {
+  IPartialWorkout,
+  IStandardResponse,
+  IWorkout,
+} from "../../interfaces/Workout";
 import produce from "immer";
 import { useRouter } from "next/router";
 import { MockRequest } from "../../services/MockRequest";
 import { Discipline } from "../../components/addWorkout/Discipline";
+import { SendRequest } from "../../services/SendRequest";
 
 export default function addWorkout() {
   const [workoutToEdit, setWorkoutToEdit] = useState<IWorkout>();
@@ -20,9 +25,17 @@ export default function addWorkout() {
     { discipline: "running", displayed: false },
     { discipline: "swimming", displayed: false },
   ]);
+  const router = useRouter();
+  const workoutId = router.query.workoutId as unknown as string | undefined;
 
   useEffect(() => {
     const workout = new MockRequest().sendWorkoutsRequest("piesId");
+    // console.log("tried to get workout to edit")
+    // new SendRequest()
+    // .getTraining(workoutId)
+    // .then((workoutResponse: IWorkout) => {
+    //   setWorkoutToEdit(workoutResponse);
+    //   })
     setWorkoutToEdit(workout);
     workout.parts.forEach(part => {
       setPartialWorkouts(
@@ -42,27 +55,22 @@ export default function addWorkout() {
     handleSubmit,
     getValues,
     setValue,
-    formState: { errors },
+    formState: { errors, touchedFields, dirtyFields, isSubmitted }, clearErrors
   } = useForm<NewWorkoutRequest>({
     resolver,
     defaultValues: workoutToEdit,
   });
-  const onSubmit = (data: any) => console.log(data);
-
-  const router = useRouter();
-  const workoutId = router.query.workoutId as unknown as string | undefined;
-  console.log(workoutId);
-  console.log("Errors: ", errors);
-  function isNotEqual(a: string, b: string): boolean {
-    return a === b;
+  async function onSubmit(workout: IWorkout) {
+    console.log(workout);
+    // console.log("tried to send request");
+    // new SendRequest().editTraining(workout).then((res: IStandardResponse) => {
+    //   console.log("Message: ", res.message);
+    // });
   }
+  console.log("Errors: ", errors);
   function addDiscipline() {
     setWorkoutToEdit(
       produce(draft => {
-        //jesli nie ma tej dyscypliny, to dodaj pusty
-        // if(nextDiscipline)
-        //wysłanie na podmiankę
-        //Labelki: distance in km, duration in h min sec
         if (
           draft?.parts.length === 2 &&
           draft?.parts[0].discipline !== nextDiscipline &&
@@ -91,7 +99,7 @@ export default function addWorkout() {
     <div className="container">
       <img src="/fitofitlogo.png" className="logo min" />
       <div className="add-workout">
-        <h1 className="add-workout__title">EDIT TRAINING</h1>
+        <h1 className="add-workout__title">EDIT WORKOUT</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DateInput
             register={register}
@@ -134,7 +142,8 @@ export default function addWorkout() {
                     errors={errors}
                     idx={idx}
                     setValue={setValue}
-                    durationToEdit={ workoutToEdit &&
+                    durationToEdit={
+                      workoutToEdit &&
                       workoutToEdit.parts &&
                       workoutToEdit.parts[idx] &&
                       workoutToEdit.parts[idx].durationInSeconds

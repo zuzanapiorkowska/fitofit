@@ -5,9 +5,10 @@ interface DateInputProps {
   register: UseFormRegister<NewWorkoutRequest>;
   errors: any;
   dateToEdit?: string;
+  isSubmitted?: any;
 }
 
-export function DateInput({ register, errors, dateToEdit }: DateInputProps) {
+export function DateInput({ register, errors, dateToEdit, isSubmitted }: DateInputProps) {
   return (
     <>
       <div className="input-area">
@@ -22,7 +23,7 @@ export function DateInput({ register, errors, dateToEdit }: DateInputProps) {
           defaultValue={dateToEdit}
         />
       </div>
-      {errors.date && <p className="error">Enter the date!</p>}
+      {isSubmitted && errors.date && <p className="error">Enter the date!</p>}
     </>
   );
 }

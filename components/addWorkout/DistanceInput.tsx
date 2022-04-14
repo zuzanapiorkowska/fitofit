@@ -18,11 +18,11 @@ export function DistanceInput({ register, errors, idx, distanceToEdit }: Distanc
         Distance in km:{" "}
       </label>
       <input
-        {...register(`parts.${idx}.distanceInMeters`, { setValueAs: v => +v })}
+        {...register(`parts.${idx}.distanceInMeters`, { setValueAs: v => +v*1000 })}
         type="number"
         step={0.001}
         className="input distance-input"
-        defaultValue={distanceToEdit}
+        defaultValue={distanceToEdit && distanceToEdit/1000}
       />
      
     </div>

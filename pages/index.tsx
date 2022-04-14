@@ -1,23 +1,32 @@
 import produce from "immer";
 import { useEffect, useState } from "react";
 import { Workout } from "../components/mainPage/Workout";
-import { IWorkout } from "../interfaces/Workout";
+import { IStandardResponse, IWorkout } from "../interfaces/Workout";
 import { MockRequest } from "../services/MockRequest";
+import { SendRequest } from "../services/SendRequest";
 
 export default function UserPage() {
   const [workouts, setWorkouts] = useState<IWorkout[]>([]);
 
   useEffect(() => {
+      // console.log("tried to get all trainings ");
+    // new SendRequest().getAllTrainings().then((workoutResponse: IWorkout[]) => {
+    //   setWorkouts(workoutResponse);
+    // });
     const previousWorkouts = new MockRequest().sendPreviousWorkoutsRequest(
       "pies"
     );
     setWorkouts(previousWorkouts);
   }, []);
 
-  //onSubmit ma się wysyłać request
-  // po co Id wymagane w IWorkout???
 
-  function handleRemoveClick(workoutId: string) {
+  async function handleRemoveClick(workoutId: string) {
+    // console.log("tried to send delete request");
+    // new SendRequest()
+    // .deleteTraining(workoutId)
+    // .then((res: IStandardResponse) => {
+    //       console.log(res.message);
+    //   })
     setWorkouts(prevWorkouts =>
       prevWorkouts.filter(workout => {
         return workout.id !== workoutId;
