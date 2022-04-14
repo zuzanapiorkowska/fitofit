@@ -4,7 +4,7 @@ import { DurationInput } from "../components/addWorkout/DurationInput";
 import { WorkoutTypeSelect } from "../components/addWorkout/WorkoutTypeSelect";
 import { NewWorkoutRequest } from "../validation/NewWorkoutRequest";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useState } from "react";
 import { IWorkout } from "../interfaces/Workout";
 import produce from "immer";
@@ -12,15 +12,15 @@ import { Discipline } from "../components/addWorkout/Discipline";
 
 export default function addWorkout() {
   const resolver = classValidatorResolver(NewWorkoutRequest);
+
+  const methods = useForm<NewWorkoutRequest>({ resolver });
   const {
     register,
     handleSubmit,
-    getValues,
     setValue,
-    formState: { errors, touchedFields, dirtyFields, isSubmitting, isSubmitted }, clearErrors
-  } = useForm<NewWorkoutRequest>({ resolver });
-
-  console.log("Dirty fields: ", dirtyFields, "Touched fields: ", touchedFields);
+    formState: { errors, isSubmitted },
+    clearErrors,
+  } = methods;
 
   async function onSubmit(workout: IWorkout) {
     console.log("tried to send request");
@@ -29,7 +29,7 @@ export default function addWorkout() {
     // .then((res: IWorkout) => {
     //       console.log("New workout Id: ", res.id);
     //   })
-    }
+  }
 
   console.log("Errors: ", errors);
 
@@ -54,50 +54,41 @@ export default function addWorkout() {
       <img src="/fitofitlogo.png" className="logo min" />
       <div className="add-workout">
         <h1 className="add-workout__title">WORKOUT DETAILS</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <DateInput register={register} errors={errors} isSubmitted={isSubmitted} />
-          <div className="add-part">
-            <WorkoutTypeSelect
-              onChange={selection => setNextDiscipline(selection)}
-            />
-            <button className="add-part__button" onClick={() => {addNewPart(); setTimeout(() => {
-              clearErrors();
-            }, 0);}}>
-              +
-            </button>
-          </div>
-          <div className="parts">
-            {partialWorkouts.map((part, idx) => {
-              if (part.displayed)
-                return (
-                  <div key={idx} className="part">
-                    <Discipline
-                      register={register}
-                      idx={idx}
-                      discipline={part.discipline}
-                    />
-                    <DistanceInput
-                      register={register}
-                      errors={errors}
-                      idx={idx}
-                    />
-                    <DurationInput
-                      register={register}
-                      errors={errors}
-                      idx={idx}
-                      setValue={setValue}
-                 
-                    />
-                  </div>
-                );
-            })}
-          </div>
-          <div className="input-area">
-            <label className="label">Notes: </label>
-            <textarea {...register("notes", {})} />
-          </div>{" "}
-          <input type="submit" className="submit-button" value="SUBMIT" />
-        </form>
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <DateInput />
+            <div className="add-part">
+              <WorkoutTypeSelect onChange={selection => setNextDiscipline(selection)} />
+              <button
+                className="add-part__button"
+                onClick={() => {
+                  addNewPart();
+                  setTimeout(() => {
+                    clearErrors();
+                  }, 0);
+                }}>
+                +
+              </button>
+            </div>
+            <div className="parts">
+              {partialWorkouts.map((part, idx) => {
+                if (part.displayed)
+                  return (
+                    <div key={idx} className="part">
+                      <Discipline idx={idx} discipline={part.discipline} />
+                      <DistanceInput idx={idx} />
+                      <DurationInput idx={idx} />
+                    </div>
+                  );
+              })}
+            </div>
+            <div className="input-area">
+              <label className="label">Notes: </label>
+              <textarea {...register("notes", {})} />
+            </div>{" "}
+            <input type="submit" className="submit-button" value="SUBMIT" />
+          </form>
+        </FormProvider>
       </div>
     </div>
   );

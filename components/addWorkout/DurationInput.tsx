@@ -1,36 +1,32 @@
 import { useEffect, useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { useFormContext, UseFormRegister } from "react-hook-form";
 import { NewWorkoutRequest } from "../../validation/NewWorkoutRequest";
 import produce from "immer";
 import moment from "moment";
 
 interface DurationInputProps {
-  register: UseFormRegister<NewWorkoutRequest>;
-  errors: any;
   idx: number;
   durationToEdit?: number;
-  setValue(name: string, value: number, {}): void;
 }
 
-export function DurationInput({
-  register,
-  errors,
-  idx,
-  setValue,
-  durationToEdit,
-}: DurationInputProps) {
+export function DurationInput({ idx, durationToEdit }: DurationInputProps) {
+  const {
+    register,
+    formState: { errors },
+    setValue,
+  } = useFormContext();
   const [duration, setDuration] = useState({
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
-  const time = moment.utc(durationToEdit*1000).format('HH:mm:ss');
+  const time = moment.utc(durationToEdit * 1000).format("HH:mm:ss");
 
   const previousDuration = {
-    hours: time.slice(0, 2), 
+    hours: time.slice(0, 2),
     minutes: time.slice(3, 5),
-    seconds: time.slice (6, 8)
-  }
+    seconds: time.slice(6, 8),
+  };
 
   useEffect(() => {
     console.log("ok");
@@ -89,8 +85,11 @@ export function DurationInput({
           defaultValue={previousDuration.seconds}
         />
         <span className="time-unit">sec</span>
-        <input defaultValue={time || 0} hidden {...register(`parts.${idx}.durationInSeconds`)} />
-
+        <input
+          defaultValue={time || 0}
+          hidden
+          {...register(`parts.${idx}.durationInSeconds`)}
+        />
       </div>
       {errors.parts &&
         errors.parts[idx] &&

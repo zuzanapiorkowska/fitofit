@@ -1,13 +1,13 @@
-import { UseFormRegister } from "react-hook-form";
+import { useFormContext, UseFormRegister } from "react-hook-form";
 import { NewWorkoutRequest } from "../../validation/NewWorkoutRequest";
 
 interface DisciplineProps {
-  register: UseFormRegister<NewWorkoutRequest>;
   idx: number;
   discipline: string;
 }
 
-export function Discipline({ register, idx, discipline }: DisciplineProps) {
+export function Discipline({ idx, discipline }: DisciplineProps) {
+  const { register } = useFormContext();
   return (
     <>
       <input hidden {...register(`userId`)} value="piesId" />

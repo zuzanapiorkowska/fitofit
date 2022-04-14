@@ -4,7 +4,7 @@ import { DurationInput } from "../../components/addWorkout/DurationInput";
 import { WorkoutTypeSelect } from "../../components/addWorkout/WorkoutTypeSelect";
 import { NewWorkoutRequest } from "../../validation/NewWorkoutRequest";
 import { classValidatorResolver } from "@hookform/resolvers/class-validator";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import {
   IPartialWorkout,
@@ -50,16 +50,18 @@ export default function addWorkout() {
   }, []);
 
   const resolver = classValidatorResolver(NewWorkoutRequest);
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    setValue,
-    formState: { errors, touchedFields, dirtyFields, isSubmitted }, clearErrors
-  } = useForm<NewWorkoutRequest>({
+  const methods = useForm<NewWorkoutRequest>({
     resolver,
     defaultValues: workoutToEdit,
   });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitted },
+    clearErrors,
+  } = methods;
+
   async function onSubmit(workout: IWorkout) {
     console.log(workout);
     // console.log("tried to send request");
@@ -100,65 +102,47 @@ export default function addWorkout() {
       <img src="/fitofitlogo.png" className="logo min" />
       <div className="add-workout">
         <h1 className="add-workout__title">EDIT WORKOUT</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <DateInput
-            register={register}
-            errors={errors}
-            dateToEdit={workoutToEdit?.date}
-          />
-          <div className="add-part">
-            <WorkoutTypeSelect
-              onChange={selection => setNextDiscipline(selection)}
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <DateInput
+              dateToEdit={workoutToEdit?.date}
             />
-            <button
-              className="add-part__button"
-              onClick={() => addDiscipline()}
-            >
-              +
-            </button>
-          </div>
-          <div className="parts">
-            {workoutToEdit?.parts.map((part, idx) => {
-              return (
-                <div key={idx} className="part">
-                  <Discipline
-                    register={register}
-                    idx={idx}
-                    discipline={part.discipline}
-                  />
-                  <DistanceInput
-                    register={register}
-                    errors={errors}
-                    idx={idx}
-                    distanceToEdit={
-                      workoutToEdit &&
-                      workoutToEdit.parts &&
-                      workoutToEdit.parts[idx] &&
-                      workoutToEdit.parts[idx].distanceInMeters
-                    }
-                  />
-                  <DurationInput
-                    register={register}
-                    errors={errors}
-                    idx={idx}
-                    setValue={setValue}
-                    durationToEdit={
-                      workoutToEdit &&
-                      workoutToEdit.parts &&
-                      workoutToEdit.parts[idx] &&
-                      workoutToEdit.parts[idx].durationInSeconds
-                    }
-                  />
-                </div>
-              );
-            })}
-          </div>
-          <div className="input-area">
-            <label className="label">Notes: </label>
-            <textarea {...register("notes", {})} />
-          </div>{" "}
-          <input type="submit" className="submit-button" value="SUBMIT" />
-        </form>
+            <div className="add-part">
+              <WorkoutTypeSelect
+                onChange={selection => setNextDiscipline(selection)}
+              />
+              <button
+                className="add-part__button"
+                onClick={() => addDiscipline()}
+              >
+                +
+              </button>
+            </div>
+            <div className="parts">
+              {workoutToEdit?.parts.map((part, idx) => {
+                return (
+                  <div key={idx} className="part">
+                    <Discipline
+                      idx={idx}
+                      discipline={part.discipline}
+                    />
+                    <DistanceInput
+                      idx={idx}
+                    />
+                    <DurationInput
+                      idx={idx}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            <div className="input-area">
+              <label className="label">Notes: </label>
+              <textarea {...register("notes", {})} />
+            </div>{" "}
+            <input type="submit" className="submit-button" value="SUBMIT" />
+          </form>
+        </FormProvider>
       </div>
     </div>
   );

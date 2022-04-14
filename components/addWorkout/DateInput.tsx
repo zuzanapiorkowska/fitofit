@@ -1,14 +1,12 @@
-import { UseFormRegister } from "react-hook-form";
+import { useFormContext, UseFormRegister } from "react-hook-form";
 import { NewWorkoutRequest } from "../../validation/NewWorkoutRequest";
 
 interface DateInputProps {
-  register: UseFormRegister<NewWorkoutRequest>;
-  errors: any;
   dateToEdit?: string;
-  isSubmitted?: any;
 }
 
-export function DateInput({ register, errors, dateToEdit, isSubmitted }: DateInputProps) {
+export function DateInput({ dateToEdit}: DateInputProps) {
+ const { register, formState: {errors, isSubmitted} } = useFormContext();
   return (
     <>
       <div className="input-area">

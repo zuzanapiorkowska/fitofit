@@ -1,16 +1,14 @@
 import { useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { useFormContext, UseFormRegister } from "react-hook-form";
 import { NewWorkoutRequest } from "../../validation/NewWorkoutRequest";
 
 interface DistanceInputProps {
-  register: UseFormRegister<NewWorkoutRequest>;
-  errors: any;
   idx: number;
   distanceToEdit?: number;
 }
 
-export function DistanceInput({ register, errors, idx, distanceToEdit }: DistanceInputProps) {
-  const [distance, setDistance] = useState<number>();
+export function DistanceInput({ idx, distanceToEdit }: DistanceInputProps) {
+  const { register, formState: {errors} } = useFormContext();
 
   return (<>
     <div className="input-area">
