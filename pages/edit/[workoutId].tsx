@@ -63,16 +63,33 @@ export default function addWorkout() {
         // if(nextDiscipline)
         //wysłanie na podmiankę
         //Labelki: distance in km, duration in h min sec
+        if (
+          draft?.parts.length === 2 &&
+          draft?.parts[0].discipline !== nextDiscipline &&
+          draft?.parts[1].discipline !== nextDiscipline
+        ) {
           draft?.parts.push({
             discipline: nextDiscipline,
             distanceInMeters: 0,
             durationInSeconds: 0,
           });
+        }
+        if (
+          draft?.parts.length === 1 &&
+          draft?.parts[0].discipline !== nextDiscipline
+        ) {
+          draft?.parts.push({
+            discipline: nextDiscipline,
+            distanceInMeters: 0,
+            durationInSeconds: 0,
+          });
+        }
       })
     );
   }
   return (
     <div className="container">
+      <img src="/fitofitlogo.png" className="logo min" />
       <div className="add-workout">
         <h1 className="add-workout__title">EDIT TRAINING</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -92,35 +109,46 @@ export default function addWorkout() {
               +
             </button>
           </div>
-          {workoutToEdit?.parts.map((part, idx) => {
-            return (
-              <div key={idx} className="part">
-                <Discipline register={register} idx={idx} discipline={part.discipline} />
-                <DistanceInput
-                  register={register}
-                  errors={errors}
-                  idx={idx}
-                  distanceToEdit={
-                    workoutToEdit &&
-                    workoutToEdit.parts &&
-                    workoutToEdit.parts[idx] &&
-                    workoutToEdit.parts[idx].distanceInMeters
-                  }
-                />
-                <DurationInput
-                  register={register}
-                  errors={errors}
-                  idx={idx}
-                  setValue={setValue}
-                />
-              </div>
-            );
-          })}
+          <div className="parts">
+            {workoutToEdit?.parts.map((part, idx) => {
+              return (
+                <div key={idx} className="part">
+                  <Discipline
+                    register={register}
+                    idx={idx}
+                    discipline={part.discipline}
+                  />
+                  <DistanceInput
+                    register={register}
+                    errors={errors}
+                    idx={idx}
+                    distanceToEdit={
+                      workoutToEdit &&
+                      workoutToEdit.parts &&
+                      workoutToEdit.parts[idx] &&
+                      workoutToEdit.parts[idx].distanceInMeters
+                    }
+                  />
+                  <DurationInput
+                    register={register}
+                    errors={errors}
+                    idx={idx}
+                    setValue={setValue}
+                    durationToEdit={ workoutToEdit &&
+                      workoutToEdit.parts &&
+                      workoutToEdit.parts[idx] &&
+                      workoutToEdit.parts[idx].durationInSeconds
+                    }
+                  />
+                </div>
+              );
+            })}
+          </div>
           <div className="input-area">
             <label className="label">Notes: </label>
             <textarea {...register("notes", {})} />
           </div>{" "}
-          <input type="submit" />
+          <input type="submit" className="submit-button" value="SUBMIT" />
         </form>
       </div>
     </div>

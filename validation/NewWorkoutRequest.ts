@@ -28,7 +28,7 @@ export class PartialWorkout {
 
 export class NewWorkoutRequest {
   @IsString()
-  userId!: string;
+  userId?: string;
 
   @IsDateString()
   date!: string;

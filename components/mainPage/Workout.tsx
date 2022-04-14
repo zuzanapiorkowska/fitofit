@@ -10,7 +10,7 @@ export function Workout({ workout, onRemoveClick }: WorkoutProps) {
   return (
     <div>
       <div className="workout-title">
-          <a className="workout-title__edit" href={`/edit/${workout.workoutId}`}><img src="/edit.png"/></a>
+          <a className="workout-title__edit" href={`/edit/${workout.id}`}><img src="/edit.png"/></a>
         <p className="workout-title__date" onClick={() => setShowDetails(!showDetails)}>{workout.date}</p>
         <img src="/trash.png" onClick={() => onRemoveClick()} className="workout-title__remove"/>
       </div>

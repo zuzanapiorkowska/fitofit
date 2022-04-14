@@ -6,11 +6,25 @@ export interface IPartialWorkout {
   discipline: Discipline;
   distanceInMeters: number;
   durationInSeconds: number;
+  id: number;
+}
+
+export interface INewPartialWorkout {
+  discipline: Discipline;
+  distanceInMeters: number;
+  durationInSeconds: number;
 }
 
 export interface IWorkout {
   userId?: string;
-  workoutId: string;
+  id: string;
+  date: string;
+  parts: IPartialWorkout[];
+  notes?: string;
+}
+
+export interface INewWorkout {
+  userId?: string;
   date: string;
   parts: IPartialWorkout[];
   notes?: string;

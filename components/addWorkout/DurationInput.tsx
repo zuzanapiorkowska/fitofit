@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { UseFormRegister } from "react-hook-form";
 import { NewWorkoutRequest } from "../../validation/NewWorkoutRequest";
 import produce from "immer";
+import moment from "moment";
 
 interface DurationInputProps {
   register: UseFormRegister<NewWorkoutRequest>;
   errors: any;
   idx: number;
+  durationToEdit?: number;
   setValue(name: string, value: number): void;
 }
 
@@ -15,15 +17,24 @@ export function DurationInput({
   errors,
   idx,
   setValue,
+  durationToEdit,
 }: DurationInputProps) {
   const [duration, setDuration] = useState({
     hours: 0,
     minutes: 0,
     seconds: 0,
   });
+  const time = moment.utc(durationToEdit*1000).format('HH:mm:ss');
 
-  const sum = duration.hours * 3600 + duration.minutes * 60 + duration.seconds;
+  const previousDuration = {
+    hours: time.slice(0, 2), 
+    minutes: time.slice(3, 5),
+    seconds: time.slice (6, 8)
+  }
+
   useEffect(() => {
+    const sum =
+      duration.hours * 3600 + duration.minutes * 60 + duration.seconds;
     setValue(`parts.${idx}.durationInSeconds`, sum);
   }, [duration]);
 
@@ -43,6 +54,7 @@ export function DurationInput({
               })
             );
           }}
+          defaultValue={previousDuration.hours}
         />
         <span className="time-unit">hr</span>
         <input
@@ -57,8 +69,9 @@ export function DurationInput({
               })
             );
           }}
+          defaultValue={previousDuration.minutes}
         />
-        <span>min</span>
+        <span className="time-unit">min</span>
         <input
           name="seconds"
           type="number"
@@ -71,13 +84,16 @@ export function DurationInput({
               })
             );
           }}
+          defaultValue={previousDuration.seconds}
         />
-        <span>sec</span>
+        <span className="time-unit">sec</span>
         <input hidden {...register(`parts.${idx}.durationInSeconds`)} />
       </div>
       {errors.parts &&
         errors.parts[idx] &&
-        errors.parts[idx].durationInSeconds && <p>Enter the duration!</p>}
+        errors.parts[idx].durationInSeconds && (
+          <p className="error">Enter the duration!</p>
+        )}
     </>
   );
 }

@@ -21,10 +21,11 @@ export function DistanceInput({ register, errors, idx, distanceToEdit }: Distanc
         {...register(`parts.${idx}.distanceInMeters`, { setValueAs: v => +v })}
         type="number"
         step={0.001}
+        className="input distance-input"
         defaultValue={distanceToEdit}
       />
      
     </div>
-    {errors.parts && errors.parts[idx] && errors.parts[idx].distanceInMeters && <p>Enter the distance!</p>}
+    {errors.parts && errors.parts[idx] && errors.parts[idx].distanceInMeters && <p className="error">Enter the distance!</p>}
   </>);
 }

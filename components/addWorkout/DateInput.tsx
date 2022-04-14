@@ -22,7 +22,7 @@ export function DateInput({ register, errors, dateToEdit }: DateInputProps) {
           defaultValue={dateToEdit}
         />
       </div>
-      {errors.date && <p>Enter the date!</p>}
+      {errors.date && <p className="error">Enter the date!</p>}
     </>
   );
 }

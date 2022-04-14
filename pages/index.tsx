@@ -20,7 +20,7 @@ export default function UserPage() {
   function handleRemoveClick(workoutId: string) {
     setWorkouts(prevWorkouts =>
       prevWorkouts.filter(workout => {
-        return workout.workoutId !== workoutId;
+        return workout.id !== workoutId;
       })
     );
   }
@@ -39,7 +39,7 @@ export default function UserPage() {
             <Workout
               key={idx}
               workout={workout}
-              onRemoveClick={() => handleRemoveClick(workout.workoutId)}
+              onRemoveClick={() => handleRemoveClick(workout.id)}
             />
           );
         })}

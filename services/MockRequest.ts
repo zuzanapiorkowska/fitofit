@@ -45,12 +45,12 @@ export class MockRequest {
         {
           discipline: "swimming",
           distanceInMeters: 2000,
-          durationInSeconds: 559434,
+          durationInSeconds: 3666,
         },
         {
           discipline: "cycling",
           distanceInMeters: 7000,
-          durationInSeconds: 1639434,
+          durationInSeconds: 9544,
         },
       ],
       notes: "Na co mi to było?",
