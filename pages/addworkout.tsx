@@ -11,7 +11,7 @@ import produce from "immer";
 import { Discipline } from "../components/addWorkout/Discipline";
 import { SendRequest } from "../services/SendRequest";
 
-export default function AddWorkout() {
+export default function AddNewWorkout() {
   const resolver = classValidatorResolver(NewWorkoutRequest);
 
   const methods = useForm<NewWorkoutRequest>({ resolver });
