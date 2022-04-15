@@ -2,7 +2,7 @@ import { IStatsResponse } from "../interfaces/Statistics";
 import { IWorkout } from "../interfaces/Workout";
 
 export class MockRequest {
-  sendPreviousWorkoutsRequest(userId: string): IWorkout[] {
+  sendPreviousWorkoutsRequest(userId: string) {
     const answer = [
       {
         userId: "pies",
@@ -38,7 +38,7 @@ export class MockRequest {
     ];
     return answer;
   }
-  sendWorkoutRequest(workoutId: string): IWorkout {
+  sendWorkoutRequest(workoutId: string) {
     const answer = {
       userId: "pies",
       workoutId: "psitrening2",
@@ -60,7 +60,7 @@ export class MockRequest {
     return answer;
   }
 
-  sendStatisticsRequest(userId: string): IStatsResponse {
+  sendStatisticsRequest(userId: string) {
     const statistics = {
       cycling: {
         topWorkout: {
