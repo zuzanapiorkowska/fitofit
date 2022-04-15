@@ -1,5 +1,3 @@
-import { Discipline } from "./Workout";
-
 export interface IStatsRequest {
   userId?: string;
   startDate?: string;
