@@ -15,25 +15,21 @@ export function DurationInput({ idx, durationToEdit }: DurationInputProps) {
     formState: { errors },
     setValue,
   } = useFormContext();
-  const [duration, setDuration] = useState({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-  const time = moment.utc(durationToEdit * 1000).format("HH:mm:ss");
+ 
+  const time = moment.utc((durationToEdit || 0) * 1000).format("HH:mm:ss");
 
-  const previousDuration = {
-    hours: time.slice(0, 2),
-    minutes: time.slice(3, 5),
-    seconds: time.slice(6, 8),
-  };
+  const [duration, setDuration] = useState({
+    hours:  +time.slice(0, 2),
+    minutes: +time.slice(3, 5),
+    seconds: +time.slice(6, 8),
+  });
 
   useEffect(() => {
     console.log("ok");
-    const sum =
-      duration.hours * 3600 + duration.minutes * 60 + duration.seconds;
+    const sum = duration.hours * 3600 + duration.minutes * 60 + duration.seconds;
     setValue(`parts.${idx}.durationInSeconds`, sum, { shouldValidate: true });
   }, [duration]);
+
 
   return (
     <>
@@ -52,7 +48,7 @@ export function DurationInput({ idx, durationToEdit }: DurationInputProps) {
               })
             );
           }}
-          defaultValue={previousDuration.hours}
+          defaultValue={duration.hours}
         />
         <span className="time-unit">:</span>
         <input
@@ -68,7 +64,7 @@ export function DurationInput({ idx, durationToEdit }: DurationInputProps) {
               })
             );
           }}
-          defaultValue={previousDuration.minutes}
+          defaultValue={duration.minutes}
         />
         <span className="time-unit">:</span>
         <input
@@ -85,19 +81,13 @@ export function DurationInput({ idx, durationToEdit }: DurationInputProps) {
             );
             console.log(duration);
           }}
-          defaultValue={previousDuration.seconds}
+          defaultValue={duration.seconds}
         />
-        <input
-          defaultValue={time || 0}
-          hidden
-          {...register(`parts.${idx}.durationInSeconds`)}
-        />
+        <input defaultValue={time || 0} hidden {...register(`parts.${idx}.durationInSeconds`)} />
       </div>
-      {errors.parts &&
-        errors.parts[idx] &&
-        errors.parts[idx].durationInSeconds && (
-          <p className="error">Enter the duration!</p>
-        )}
+      {errors.parts && errors.parts[idx] && errors.parts[idx].durationInSeconds && (
+        <p className="error">Enter the duration!</p>
+      )}
     </>
   );
 }

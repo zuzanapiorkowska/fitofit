@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useFormContext, UseFormRegister } from "react-hook-form";
 import { NewWorkoutRequest } from "../../validation/NewWorkoutRequest";
 
@@ -7,6 +8,12 @@ interface DateInputProps {
 
 export function DateInput({ dateToEdit}: DateInputProps) {
  const { register, formState: {errors, isSubmitted}, setValue } = useFormContext();
+
+ useEffect(() => {
+  console.log("ok");
+  setValue(`date`, dateToEdit, { shouldValidate: true });
+}, [dateToEdit]);
+
   return (
     <>
       <div className="input-area">
