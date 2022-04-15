@@ -47,7 +47,7 @@ export default function UserPage() {
             <Workout
               key={idx}
               workout={workout}
-              onRemoveClick={() => handleRemoveClick(workout.id)}
+              onRemoveClick={() => handleRemoveClick(workout.id || "")}
             />
           );
         })}
