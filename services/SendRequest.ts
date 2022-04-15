@@ -54,7 +54,7 @@ export class SendRequest {
     const url = "/api/training";
     try {
       console.log("tried to delete training");
-      const response = await axios.delete(`${url}/${workout}`);
+      const response = await axios.delete(`${url}/${workoutId}`);
       const ConfirmationAnswer: IStandardResponse = response.data;
       return ConfirmationAnswer;
     } catch (err: any) {
