@@ -359,3 +359,10 @@ form {
   border: 3px solid rgba(58, 211, 185, 0.6);
   background-color: #31664f;
 }
+
+.fitofit-name {
+  margin: 0;
+  margin-bottom: 1rem;
+  color: rgb(152, 246, 246);
+  font-size: 1rem;
+}

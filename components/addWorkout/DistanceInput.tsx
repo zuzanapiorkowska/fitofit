@@ -20,6 +20,7 @@ export function DistanceInput({ idx, distanceToEdit }: DistanceInputProps) {
         type="number"
         step={0.001}
         className="input distance-input"
+        placeholder="0"
         defaultValue={distanceToEdit && distanceToEdit/1000}
       />
       <span className="unit">km</span>

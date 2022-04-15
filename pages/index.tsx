@@ -10,16 +10,13 @@ export default function UserPage() {
   const [workouts, setWorkouts] = useState<IWorkout[]>([]);
 
   useEffect(() => {
-      // console.log("tried to get all trainings ");
+    // console.log("tried to get all trainings ");
     // new SendRequest().getAllTrainings().then((workoutResponse: IWorkout[]) => {
     //   setWorkouts(workoutResponse);
     // });
-    const previousWorkouts = new MockRequest().sendPreviousWorkoutsRequest(
-      "pies"
-    );
+    const previousWorkouts = new MockRequest().sendPreviousWorkoutsRequest("pies");
     setWorkouts(previousWorkouts);
   }, []);
-
 
   async function handleRemoveClick(workoutId: string) {
     // console.log("tried to send delete request");
@@ -35,10 +32,10 @@ export default function UserPage() {
     );
   }
 
-
   return (
     <div className="container">
-      <img src="/fitofitlogo.png"className="logo"/>
+      <img src="/fitofitlogo.png" className="logo" />
+      <h1 className="fitofit-name">FitoFit</h1>
       <h1>Hello, User!</h1>
       <a href="/addworkout">
         <button className="add-new-workout-button">ADD NEW WORKOUT</button>
@@ -55,7 +52,7 @@ export default function UserPage() {
           );
         })}
       </div>
-        <Statistics userId={workouts && workouts[0] && workouts[0].userId}/>
+      <Statistics userId={workouts && workouts[0] && workouts[0].userId} />
     </div>
   );
 }

@@ -15,6 +15,7 @@ import produce from "immer";
 import { useRouter } from "next/router";
 import { MockRequest } from "../../services/MockRequest";
 import { Discipline } from "../../components/addWorkout/Discipline";
+import { SendRequest } from "../../services/SendRequest";
 
 export default function addWorkout() {
   const [workoutToEdit, setWorkoutToEdit] = useState<IWorkout>();
@@ -65,10 +66,11 @@ export default function addWorkout() {
 
   async function onSubmit(workout: IWorkout) {
     console.log(workout);
-    // console.log("tried to send request");
-    // new SendRequest().editTraining(workout).then((res: IStandardResponse) => {
-    //   console.log("Message: ", res.message);
-    // });
+    location.replace('/');
+    console.log("tried to send request");
+    new SendRequest().editTraining(workout).then((res: IStandardResponse) => {
+      console.log("Message: ", res.message);
+    });
   }
   console.log("Errors: ", errors);
   function addDiscipline() {

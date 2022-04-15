@@ -9,6 +9,7 @@ import { useState } from "react";
 import { IWorkout } from "../interfaces/Workout";
 import produce from "immer";
 import { Discipline } from "../components/addWorkout/Discipline";
+import { SendRequest } from "../services/SendRequest";
 
 export default function addWorkout() {
   const resolver = classValidatorResolver(NewWorkoutRequest);
@@ -24,11 +25,12 @@ export default function addWorkout() {
 
   async function onSubmit(workout: IWorkout) {
     console.log("tried to send request");
-    // new SendRequest()
-    // .addNewTraining(workout)
-    // .then((res: IWorkout) => {
-    //       console.log("New workout Id: ", res.id);
-    //   })
+    location.replace("/")
+    new SendRequest()
+    .addNewTraining(workout)
+    .then((res: IWorkout) => {
+          console.log("New workout Id: ", res.id);
+      })
   }
 
   console.log("Errors: ", errors);
