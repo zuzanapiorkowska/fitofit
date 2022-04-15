@@ -6,7 +6,7 @@ export class MockRequest {
     const answer = [
       {
         userId: "pies",
-        workoutId: "psitrening1",
+        id: "psitrening1",
         date: "2022-04-10",
         parts: [
           {
@@ -18,8 +18,8 @@ export class MockRequest {
         notes: "Ale się zmęczyłem, ojojoj",
       },
       {
-        userId: "pies",
-        workoutId: "psitrening2",
+        userId: "pies2",
+        id: "psitrening2",
         date: "2022-04-11",
         parts: [
           {
