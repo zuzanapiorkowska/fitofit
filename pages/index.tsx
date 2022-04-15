@@ -1,4 +1,5 @@
 import produce from "immer";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Statistics } from "../components/mainPage/Statistics";
 import { Workout } from "../components/mainPage/Workout";
@@ -37,9 +38,9 @@ export default function UserPage() {
       <img src="/fitofitlogo.png" className="logo" />
       <h1 className="fitofit-name">FitoFit</h1>
       <h1>Hello, User!</h1>
-      <a href="/addworkout">
+      <Link href="/addworkout">
         <button className="add-new-workout-button">ADD NEW WORKOUT</button>
-      </a>
+      </Link>
       <div>
         <p className="title">MY WORKOUTS</p>
         {workouts.map((workout, idx) => {

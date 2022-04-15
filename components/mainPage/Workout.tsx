@@ -1,4 +1,5 @@
 import moment from "moment";
+import Link from "next/link";
 import { useState } from "react";
 import { IWorkout } from "../../interfaces/Workout";
 
@@ -11,7 +12,7 @@ export function Workout({ workout, onRemoveClick }: WorkoutProps) {
   return (
     <div>
       <div className="workout-title">
-          <a className="workout-title__edit" href={`/edit/${workout.id}`}><img src="/edit.png"/></a>
+          <Link href={`/edit/${workout.id}`}><span className="workout-title__edit"><img src="/edit.png"/></span></Link>
         <p className="workout-title__date" onClick={() => setShowDetails(!showDetails)}>{workout.date}</p>
         <img src="/trash.png" onClick={() => onRemoveClick()} className="workout-title__remove"/>
       </div>
