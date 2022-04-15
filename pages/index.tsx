@@ -44,7 +44,7 @@ export default function UserPage() {
         <button className="add-new-workout-button">ADD NEW WORKOUT</button>
       </a>
       <div>
-        <p className="title">MY TRAININGS</p>
+        <p className="title">MY WORKOUTS</p>
         {workouts.map((workout, idx) => {
           return (
             <Workout
@@ -55,7 +55,7 @@ export default function UserPage() {
           );
         })}
       </div>
-        <Statistics userId={workouts[0].userId}/>
+        <Statistics userId={workouts && workouts[0] && workouts[0].userId}/>
     </div>
   );
 }

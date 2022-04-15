@@ -62,66 +62,57 @@ export class MockRequest {
 
   sendStatisticsRequest(userId: string): IStatsResponse {
     const statistics = {
-      topWorkouts: [
-        {
-          discipline: "cycling",
+      cycling: {
+        topWorkout: {
           speed: 8,
           distance: 5000,
           duration: 36000,
         },
-        {
-          discipline: "running",
-          speed: 6,
-          distance: 4000,
-          duration: 76000,
-        },
-        {
-          discipline: "swimming",
-          speed: 7,
-          distance: 2000,
-          duration: 16000,
-        },
-      ],
-      avgWorkouts: [
-        {
-          discipline: "cycling",
+        avgOfWorkouts: {
           speed: 2,
           distance: 4000,
           duration: 26000,
         },
-        {
-          discipline: "running",
-          speed: 3,
-          distance: 1000,
-          duration: 96000,
-        },
-        {
-          discipline: "swimming",
-          speed: 1,
-          distance: 1000,
-          duration: 2600,
-        },
-      ],
-      totalWorkouts: [
-        {
-          discipline: "cycling",
-          distance: 4000,
-          duration: 2330,
-          workoutsCount: 2,
-        },
-        {
-          discipline: "running",
-          distance: 2300,
-          duration: 2230,
-          workoutsCount: 10,
-        },
-        {
-          discipline: "swimming",
+        totalWorkouts: {
           distance: 200,
           duration: 2300,
           workoutsCount: 4,
         },
-      ],
+      },
+      running: {
+        topWorkout: {
+          speed: 8,
+          distance: 5000,
+          duration: 36000,
+        },
+        avgOfWorkouts: {
+          speed: 2,
+          distance: 4000,
+          duration: 26000,
+        },
+        totalWorkouts: {
+          distance: 700,
+          duration: 8300,
+          workoutsCount: 23,
+        },
+      },
+      swimming: {
+        topWorkout: {
+          speed: 8,
+          distance: 5000,
+          duration: 36000,
+        },
+        avgOfWorkouts: {
+          speed: 2,
+          distance: 4000,
+          duration: 26000,
+        },
+        totalWorkouts: {
+          distance: 400,
+          duration: 1300,
+          workoutsCount: 4,
+        },
+      },
     };
     return statistics;
   }
