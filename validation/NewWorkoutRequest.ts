@@ -9,13 +9,12 @@ import {
   IsOptional,
   IsPositive,
 } from "class-validator";
-import { Discipline } from "../interfaces/Workout";
 import { Type } from "class-transformer";
 import "reflect-metadata";
 
 export class PartialWorkout {
   @IsIn(["cycling", "running", "swimming"])
-  discipline!: Discipline;
+  discipline!: string;
 
   @IsInt()
   @IsPositive()
