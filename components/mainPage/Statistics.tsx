@@ -9,7 +9,7 @@ interface StatisticsProps {
 }
 
 export function Statistics({ userId }: StatisticsProps) {
-  const stats = new MockRequest().sendStatisticsRequest(userId);
+  const stats = new MockRequest().sendStatisticsRequest(userId || "");
 
   const [mainStats, setMainStats] = useState({
     totalCount:
