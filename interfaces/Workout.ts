@@ -1,9 +1,8 @@
-export type Discipline = "cycling" | "swimming" | "running";
 export type GoalType = "distance" | "workoutCount";
 export type Gender = "male" | "female" | "other" | "prefer not to say";
 
 export interface IPartialWorkout {
-  discipline: Discipline;
+  discipline: string;
   distanceInMeters: number;
   durationInSeconds: number;
   id?: number;
