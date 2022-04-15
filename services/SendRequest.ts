@@ -9,7 +9,7 @@ export class SendRequest {
       const response = await axios.get(url);
       const allWorkouts: IWorkout[] = response.data;
       return allWorkouts;
-    } catch (err: unknown) {
+    } catch (err: any) {
       throw new Error(err.message + `Cannot connect to ${url}`);
     }
   }
@@ -21,7 +21,7 @@ export class SendRequest {
       const response = await axios.get(`${url}/${workoutId}`);
       const workout: IWorkout = response.data;
       return workout;
-    } catch (err: unknown) {
+    } catch (err: any) {
       throw new Error(err.message + `Cannot connect to ${url}`);
     }
   }
@@ -33,7 +33,7 @@ export class SendRequest {
       const response = await axios.post(url, { workout: workout });
       const ConfirmationAnswer: IWorkout = response.data;
       return ConfirmationAnswer;
-    } catch (err: unknown) {
+    } catch (err:any) {
       throw new Error(err.message + `Cannot connect to ${url}`);
     }
   }
@@ -45,7 +45,7 @@ export class SendRequest {
       const response = await axios.put(url, { workout: workout });
       const ConfirmationAnswer: IStandardResponse = response.data;
       return ConfirmationAnswer;
-    } catch (err: unknown) {
+    } catch (err:any) {
       throw new Error(err.message + `Cannot connect to ${url}`);
     }
   }
@@ -57,7 +57,7 @@ export class SendRequest {
       const response = await axios.delete(`${url}/${workout}`);
       const ConfirmationAnswer: IStandardResponse = response.data;
       return ConfirmationAnswer;
-    } catch (err: unknown) {
+    } catch (err: any) {
       throw new Error(err.message + `Cannot connect to ${url}`);
     }
   }
